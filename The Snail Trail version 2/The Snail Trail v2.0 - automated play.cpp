@@ -838,7 +838,11 @@ void showOptions(int column, int row)
 	Gotoxy(column, row);
 	SelectBackColour(clWhite);
 	SelectTextColour(clBlack);
-	cout << "Instructions";
+
+	string instructions = string("Instructions \n");
+	const char * instructionsChar = instructions.c_str();
+	puts(instructionsChar);
+
 	SelectBackColour(clRed);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row += 1);
