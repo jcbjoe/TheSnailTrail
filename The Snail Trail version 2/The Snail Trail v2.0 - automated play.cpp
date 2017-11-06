@@ -437,14 +437,20 @@ void paintGarden(const char garden[][SIZEX])
 	SelectBackColour(clGreen);
 	SelectTextColour(clDarkBlue);
 	Gotoxy(0, 2);
+
+	string gardenString = "";
+
 	for (int y(0); y < (SIZEY); ++y)
 	{
 		for (int x(0); x < (SIZEX); ++x)
 		{
-			putchar(garden[y][x]);			// display current garden contents
+			gardenString += (garden[y][x]);
+			//putchar(garden[y][x]);			// display current garden contents
 		}
-		cout << endl;
+		gardenString += "\n";
 	}
+	const char * gardenStringChar = gardenString.c_str();
+	puts(gardenStringChar);
 } //end of paintGarden
 
 

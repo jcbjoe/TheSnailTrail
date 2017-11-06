@@ -233,3 +233,76 @@ Average Paint time=	16.248 ms
 Average Init time=	15.623 us
 
 *************************************************************************************************************************
+//At home
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:08:15
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	45.503
+Average Paint time=	21.950 ms
+Average Init time=	16.384 us
+
+*************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:09:40
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	41.863
+Average Paint time=	23.920 ms
+Average Init time=	16.033 us
+
+*************************************************************************************************************************
+//DEBUG HOME PC With putchar
+
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:11:11
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	46.001
+Average Paint time=	21.738 ms
+Average Init time=	15.799 us
+
+*************************************************************************************************************************
+// String builder
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:17:23
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	45.710
+Average Paint time=	21.872 ms
+Average Init time=	15.916 us
+
+*************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:17:38
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	45.136
+Average Paint time=	22.130 ms
+Average Init time=	18.139 us
+
+*************************************************************************************************************************
+//Before puts
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:18:37
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	46.234
+Average Paint time=	21.628 ms
+Average Init time=	20.831 us
+
+*************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:28:02
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	69.685
+Average Paint time=	14.341 ms
+Average Init time=	15.974 us
+
+*************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 06/11/2017	TIME: 21:29:41
+SUMMARY for 5 games played, with 139 moves entered.
+
+Average frames/sec=	68.267
+Average Paint time=	14.646 ms
+Average Init time=	15.740 us
+
+*************************************************************************************************************************
