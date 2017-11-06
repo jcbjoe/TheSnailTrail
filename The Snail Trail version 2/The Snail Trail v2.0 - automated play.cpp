@@ -458,7 +458,7 @@ void paintGarden(const char garden[][SIZEX])
   //															no slime yet!
 void initialiseSlimeTrail(char slimeTrail[][SIZEX])
 { // set the whole array to 0
-
+	//memset(slimeTrail, 0, sizeof(slimeTrail));
 	for (int x = 1; x < SIZEX - 1; x++)			// can't slime the walls
 		for (int y = 1; y < SIZEY - 1; y++)
 			slimeTrail[y][x] = 0;
@@ -804,7 +804,11 @@ void showTitle(int column, int row)
 	SelectBackColour(clBlack);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row);
-	cout << "...THE SNAIL TRAIL..." << endl;
+
+	string snailTrail = string("...THE SNAIL TRAIL...\n");
+	const char * snailTrailChar = snailTrail.c_str();
+	puts(snailTrailChar);
+
 	SelectBackColour(clWhite);
 	SelectTextColour(clRed);
 
@@ -816,9 +820,17 @@ void showDateAndTime(int column, int row)
 	SelectBackColour(clWhite);
 	SelectTextColour(clBlack);
 	Gotoxy(column, row);
-	cout << "DATE: " << GetDate();
+
+	string date = string("DATE: ") + GetDate() + "\n";
+	const char * dateChar = date.c_str();
+	puts(dateChar);
+
 	Gotoxy(column, row + 1);
-	cout << "TIME: " << GetTime();
+
+	string time = string("TIME: ") + GetTime() + "\n";
+	const char * timeChar = time.c_str();
+	puts(timeChar);
+
 } //end of showDateAndTime
 
 void showOptions(int column, int row)
@@ -830,13 +842,28 @@ void showOptions(int column, int row)
 	SelectBackColour(clRed);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row += 1);
-	cout << "* TO MOVE USE ARROW KEYS - EAT ALL " << LETTUCE_QUOTA << " LETTUCES TO WIN.";
+
+	string arrowKeys = string("* TO MOVE USE ARROW KEYS - EAT ALL ") + to_string(LETTUCE_QUOTA) + string(" LETTUCES TO WIN. \n");
+	const char * arrowKeysChar = arrowKeys.c_str();
+	puts(arrowKeysChar);
+
 	Gotoxy(column, row += 1);
-	cout << "* EAT WORMS (" << WORM << ") AND LETTUCES (" << LETTUCE << ") TO BOOST HEALTH.";
+
+	string eatworms = string("* EAT WORMS (") + to_string(WORM) + string(") AND LETTUCES (" + to_string(LETTUCE)) + string(") TO BOOST HEALTH. \n");
+	const char * eatwormsChar = eatworms.c_str();
+	puts(eatwormsChar);
+
 	Gotoxy(column, row += 1);
-	cout << "* EACH MOVE AND INVISIBLE SLUG PELLETS DEPLETE HEALTH.";
+
+	string invisibleSlug = string("* EACH MOVE AND INVISIBLE SLUG PELLETS DEPLETE HEALTH. \n");
+	const char * invisibleSlugChar = invisibleSlug.c_str();
+	puts(invisibleSlugChar);
+
 	Gotoxy(column, row += 1);
-	cout << "* TO QUIT ANY TIME USE 'Q'";
+
+	string quit = string("* TO QUIT ANY TIME USE 'Q' \n");
+	const char * quitChar = invisibleSlug.c_str();
+	puts(quitChar);
 } //end of showOptions
 
 void showMessage(string msg, int column, int row)
