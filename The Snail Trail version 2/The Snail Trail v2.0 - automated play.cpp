@@ -17,7 +17,7 @@
 
 bool record_Every_Step(false);						//NEW 'true' = record all details, 'false' = summary only
 
-#define studentName     "Adrian Oram"				//NEW Please change this as appropriate!
+#define studentName     "Joe Garlick"				//NEW Please change this as appropriate!
 
 
 // Comments showing 'NEW' are on lines additional to the original Snail Trail version 0.
@@ -441,7 +441,7 @@ void paintGarden(const char garden[][SIZEX])
 	{
 		for (int x(0); x < (SIZEX); ++x)
 		{
-			cout << garden[y][x];			// display current garden contents
+			putchar(garden[y][x]);			// display current garden contents
 		}
 		cout << endl;
 	}

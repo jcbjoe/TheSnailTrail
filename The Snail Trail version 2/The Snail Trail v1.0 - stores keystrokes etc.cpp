@@ -12,7 +12,7 @@ bool record_Every_Step(true);						//NEW 'true' = record all details, 'false' = 
 
 // (2) - Identify your code and output!
 
-#define studentName     "Adrian Oram"				//NEW Please change this as appropriate!
+#define studentName     "Joe Garlick"				//NEW Please change this as appropriate!
 
 
 // Comments showing 'NEW' are on lines additional to the original Snail Trail version 0.

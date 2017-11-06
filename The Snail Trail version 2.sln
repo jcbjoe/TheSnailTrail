@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "The Snail Trail version 2", "The Snail Trail version 2\The Snail Trail version 2.vcxproj", "{11140BA9-6E7C-495E-B735-CD1E72C4ED11}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "The Snail Trail 2017", "The Snail Trail version 2\The Snail Trail version 2.vcxproj", "{11140BA9-6E7C-495E-B735-CD1E72C4ED11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B8DA270F-7F9C-45D7-B7BD-EA7C82E810E1}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5466B4C-C8EE-4D94-BC7F-7E1B2FA43B18}
 	EndGlobalSection
 EndGlobal
