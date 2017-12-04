@@ -72,7 +72,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
@@ -94,6 +94,7 @@
     <ClCompile Include="The Snail Trail v2.0 - automated play.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SnailTrailMoves.csv" />
     <None Include="SnailTrailTimes.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

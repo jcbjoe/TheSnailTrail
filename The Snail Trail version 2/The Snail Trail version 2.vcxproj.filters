@@ -40,5 +40,8 @@
     <None Include="SnailTrailTimes.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="SnailTrailMoves.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

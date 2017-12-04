@@ -139,7 +139,7 @@ const int LEFT(75);						// left key
 const char QUIT('q');					//end the game
 //const char Bleep('\a');				// annoying Bleep
 //string Bleeeep("\a\a");				// very annoying Bleeps
-const char Bleep('B');				// NEW2 Silent Version ! annoying Bleep
+const char * Bleep = ("B");				// NEW2 Silent Version ! annoying Bleep
 string Bleeeep("BB");				// NEW2 Silent Version ! very annoying Bleeps
 
 const int LEFTM(SIZEX + 3);				//define left margin for messages (avoiding garden)
@@ -267,7 +267,7 @@ int __cdecl main()
 
 			// *************** end of timed section ******************************************
 
-			FrameTime.stopTimer(); // not part of game
+			//FrameTime.stopTimer(); // not part of game
 
 			showTimes(InitTime.getElapsedTime(), FrameTime.getElapsedTime(), PaintTime.getElapsedTime(), LEFTM, 6);
 			
@@ -616,7 +616,9 @@ void moveFrogs(int snail[], int frogs[][2], string& msg, char garden[][SIZEX], c
 				if (frogs[f][0] == snail[0] && frogs[f][1] == snail[1])	// landed on snail? - grub up!
 				{
 					msg = "FROG GOT YOU!";
-					cout << Bleeeep;									// produce a death knell
+					//cout << Bleeeep;									// produce a death knell
+					const char * BleeeepChar = Bleeeep.c_str();
+					puts(BleeeepChar);
 					snailStillAlive = false;							// snail is dead!
 					gameEvent = DEADSNAIL;								//NEW record result
 				}
@@ -624,7 +626,8 @@ void moveFrogs(int snail[], int frogs[][2], string& msg, char garden[][SIZEX], c
 			}
 			else {
 				msg = "EAGLE GOT A FROG";
-				cout << Bleep;											//produce a warning sound
+				//cout << Bleep;											//produce a warning sound
+				puts(Bleep);
 			}
 		}
 	}// end of FOR loop
@@ -659,7 +662,9 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 	if (lifeLeft < 0.0)					// check if snail has run out of energy
 	{
 		msg = "EXHAUSTED! TIME TO DIE...";
-		cout << Bleeeep;
+		//cout << Bleeeep;
+		const char * BleeeepChar = Bleeeep.c_str();
+		puts(BleeeepChar);
 		snailStillAlive = false;		// if exhausted, game over 
 		gameEvent = DEADSNAIL;			//NEW record result of move
 		return;
@@ -696,7 +701,8 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		snail[1] += keyMove[1];
 		foodSources[snail[0]][snail[1]] = GRASS;		// eat the worm, only grass left behind
 		msg = "WORM EATEN";
-		cout << Bleep;
+		//cout << Bleep;
+		puts(Bleep);
 
 		if (lifeLeft > (LIFE_SPAN - WORM_ENERGY)) lifeLeft = LIFE_SPAN;	// can't have more than 100% life span!
 		else lifeLeft += WORM_ENERGY;
@@ -709,7 +715,8 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		msg = "PELLET ALERT!";
-		cout << Bleep;									// produce a warning sound
+		//cout << Bleep;									// produce a warning sound
+		puts(Bleep);
 
 		lifeLeft *= (LIFE_SPAN - PELLET_POISON);		// lose a bit of health
 		moveResult = PELLET;							//NEW record result of move
@@ -720,14 +727,16 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		msg = "OH NO! A FROG!";
-		cout << Bleeeep;								// produce a death knell
+		//cout << Bleeeep;								// produce a death knell
+		puts(Bleep);
 		snailStillAlive = false;						// game over
 		moveResult = FROG;								//NEW record result of move
 		gameEvent = DEADSNAIL;							//NEW record result of move
 		break;
 
 	case WALL:			// Oops, bumped into garden wall
-		cout << Bleep;				// produce a warning sound
+		//cout << Bleep;				// produce a warning sound
+		puts(Bleep);
 		msg = "THAT'S A WALL!";
 		lifeLeft += ENERGY_USED;	// didn't move, so return some health!
 		moveResult = WALL;			//NEW record result of move
@@ -743,7 +752,8 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		break;
 
 	case SLIME:				// Been here before, snail doesn't cross his own slime!
-		cout << Bleep;		// produce a warning sound
+		//cout << Bleep;		// produce a warning sound
+		puts(Bleep);
 		msg = "THAT'S SLIME!";
 		lifeLeft += ENERGY_USED; // didn't move, so return some health!
 		moveResult = SLIME;								//NEW record result of move
@@ -805,7 +815,7 @@ void showTitle(int column, int row)
 	SelectTextColour(clYellow);
 	Gotoxy(column, row);
 
-	string snailTrail = string("...THE SNAIL TRAIL...\n");
+	string snailTrail = "...THE SNAIL TRAIL...\n";
 	const char * snailTrailChar = snailTrail.c_str();
 	puts(snailTrailChar);
 
@@ -821,14 +831,29 @@ void showDateAndTime(int column, int row)
 	SelectTextColour(clBlack);
 	Gotoxy(column, row);
 
-	string date = string("DATE: ") + GetDate() + "\n";
-	const char * dateChar = date.c_str();
+
+	time_t rawtime;
+	struct tm * timeinfo;
+	char bufferDate[80];
+	char bufferTime[80];
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(bufferDate, sizeof(bufferDate), "%d-%m-%Y", timeinfo);
+	strftime(bufferTime, sizeof(bufferTime), "%I:%M:%S", timeinfo);
+
+	//string dateCharStr = string("DATE: ") + GetDate() + "\n";
+	//const char * dateChar = dateCharStr.c_str();
+	
+	const char * dateChar = bufferDate;
 	puts(dateChar);
 
 	Gotoxy(column, row + 1);
 
-	string time = string("TIME: ") + GetTime() + "\n";
-	const char * timeChar = time.c_str();
+	//string timeCharStr = string("TIME: ") + GetTime() + "\n";
+	//const char * timeChar = timeCharStr.c_str();
+	const char * timeChar = timeChar;
 	puts(timeChar);
 
 } //end of showDateAndTime
@@ -839,7 +864,7 @@ void showOptions(int column, int row)
 	SelectBackColour(clWhite);
 	SelectTextColour(clBlack);
 
-	string instructions = string("Instructions \n");
+	string instructions = "Instructions \n";
 	const char * instructionsChar = instructions.c_str();
 	puts(instructionsChar);
 
@@ -847,25 +872,25 @@ void showOptions(int column, int row)
 	SelectTextColour(clYellow);
 	Gotoxy(column, row += 1);
 
-	string arrowKeys = string("* TO MOVE USE ARROW KEYS - EAT ALL ") + to_string(LETTUCE_QUOTA) + string(" LETTUCES TO WIN. \n");
+	string arrowKeys = "* TO MOVE USE ARROW KEYS - EAT ALL " + to_string(LETTUCE_QUOTA) + " LETTUCES TO WIN. \n";
 	const char * arrowKeysChar = arrowKeys.c_str();
 	puts(arrowKeysChar);
 
 	Gotoxy(column, row += 1);
 
-	string eatworms = string("* EAT WORMS (") + to_string(WORM) + string(") AND LETTUCES (" + to_string(LETTUCE)) + string(") TO BOOST HEALTH. \n");
+	string eatworms = "* EAT WORMS (" + to_string(WORM) + ") AND LETTUCES (" + to_string(LETTUCE) + ") TO BOOST HEALTH. \n";
 	const char * eatwormsChar = eatworms.c_str();
 	puts(eatwormsChar);
 
 	Gotoxy(column, row += 1);
 
-	string invisibleSlug = string("* EACH MOVE AND INVISIBLE SLUG PELLETS DEPLETE HEALTH. \n");
+	string invisibleSlug = "* EACH MOVE AND INVISIBLE SLUG PELLETS DEPLETE HEALTH. \n";
 	const char * invisibleSlugChar = invisibleSlug.c_str();
 	puts(invisibleSlugChar);
 
 	Gotoxy(column, row += 1);
 
-	string quit = string("* TO QUIT ANY TIME USE 'Q' \n");
+	string quit = "* TO QUIT ANY TIME USE 'Q' \n";
 	const char * quitChar = invisibleSlug.c_str();
 	puts(quitChar);
 } //end of showOptions
@@ -892,8 +917,15 @@ void showSnailhealth(float health, int column, int row)
 		SelectTextColour(clRed);
 	else SelectTextColour(clYellow);
 
-	if (health < 0.0)  cout << "Health: none!";
-	else cout << "Health: " << health * 100.0 << "%";
+	if (health < 0.0) {
+		string Health = string("Health: none!");
+		const char * HealthChar = Health.c_str();
+		puts(HealthChar);
+	} else {
+		string Health = "Health: " + to_string(health * 100.0) + "%";
+		const char * HealthChar = Health.c_str();
+		puts(HealthChar);
+	}
 
 } //end of showMessage
 
