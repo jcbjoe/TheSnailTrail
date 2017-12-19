@@ -86,6 +86,7 @@ Annoying bleeps from the PC's speaker announce significant events, check the mes
 #include <fstream>           //for files
 #include <string>            //for string
 #include "hr_time.h"         //for timers
+#include <sstream>
 
 using namespace std;
 
@@ -248,6 +249,7 @@ int __cdecl main()
 		// ******************************** Frame Loop **************************************
 		while (((key | 0x20) != QUIT) && snailStillAlive && !fullOfLettuce)	//user not bored, and snail not dead or full
 		{
+
 			FrameTime.startTimer(); // not part of game
 
 			// ************** code to be timed ***********************************************
@@ -438,19 +440,18 @@ void paintGarden(const char garden[][SIZEX])
 	SelectTextColour(clDarkBlue);
 	Gotoxy(0, 2);
 
-	string gardenString = "";
+	stringstream gardenString;
 
 	for (int y(0); y < (SIZEY); ++y)
 	{
 		for (int x(0); x < (SIZEX); ++x)
 		{
-			gardenString += (garden[y][x]);
+			gardenString << (garden[y][x]);
 			//putchar(garden[y][x]);			// display current garden contents
 		}
-		gardenString += "\n";
+		gardenString << '\n';
 	}
-	const char * gardenStringChar = gardenString.c_str();
-	puts(gardenStringChar);
+	puts(gardenString.str().c_str());
 } //end of paintGarden
 
 
@@ -810,14 +811,12 @@ void clearMessage(string& msg)
 void showTitle(int column, int row)
 { //display game title
 
-	Clrscr();
+	//Clrscr();
 	SelectBackColour(clBlack);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row);
 
-	string snailTrail = "...THE SNAIL TRAIL...\n";
-	const char * snailTrailChar = snailTrail.c_str();
-	puts(snailTrailChar);
+	puts("...THE SNAIL TRAIL...\n");
 
 	SelectBackColour(clWhite);
 	SelectTextColour(clRed);
