@@ -150,7 +150,7 @@ int	  snailStillAlive(true);			// snail starts alive!
 float lifeLeft(LIFE_SPAN);				// Life starts at 100%, need to eat lettuces and worms to live
 int   lettucesEaten(0);					// win when this reaches LETTUCE_QUOTA
 bool  fullOfLettuce(false);				// when full and alive snail has won!
-
+string previousMessage("");
 
 CStopWatch	InitTime,
 FrameTime,
@@ -411,7 +411,6 @@ void paintGame(string msg, char garden[][SIZEX])
 	void paintGarden(const char[][SIZEX]);
 	void showOptions(int, int);
 	void showMessage(string, int, int);
-	void showPelletCount(int, int, int);
 	void showSnailhealth(float, int, int);
 
 	// ************** code to be timed ***********************************************
@@ -431,28 +430,7 @@ void paintGame(string msg, char garden[][SIZEX])
 } //end of paintGame
 
 
-  //**************************************************************************
-  //													display garden on screen
-void paintGarden(const char garden[][SIZEX])
-{ //display garden content on screen
 
-	SelectBackColour(clGreen);
-	SelectTextColour(clDarkBlue);
-	Gotoxy(0, 2);
-
-	stringstream gardenString;
-
-	for (int y(0); y < (SIZEY); ++y)
-	{
-		for (int x(0); x < (SIZEX); ++x)
-		{
-			gardenString << (garden[y][x]);
-			//putchar(garden[y][x]);			// display current garden contents
-		}
-		gardenString << '\n';
-	}
-	puts(gardenString.str().c_str());
-} //end of paintGarden
 
 
   //**************************************************************************
@@ -655,6 +633,7 @@ bool eatenByEagle(char garden[][SIZEX], int frog[])
 
 void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& msg, char garden[][SIZEX], char slimeTrail[][SIZEX])
 {
+	const string spaces = "                                              ";
 	// move snail on the garden when possible.
 	// check intended new position & move if possible...
 	// ...depending on what's on the intended next position in garden.
@@ -688,7 +667,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		if (lifeLeft > LIFE_SPAN) lifeLeft = LIFE_SPAN;	// can't acquire more than 100% energy
 
 		fullOfLettuce = (lettucesEaten == LETTUCE_QUOTA); // if full, stop the game as snail wins!
-		fullOfLettuce ? msg = "LAST LETTUCE EATEN" : msg = "LETTUCE EATEN";
+		fullOfLettuce ? msg = "LAST LETTUCE EATEN" + spaces : msg = "LETTUCE EATEN" + spaces;
 		fullOfLettuce ? cout << Bleeeep : cout << Bleep;
 		// WIN! WIN! WIN!
 		if (fullOfLettuce) gameEvent = WIN;				//NEW record result
@@ -701,7 +680,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		foodSources[snail[0]][snail[1]] = GRASS;		// eat the worm, only grass left behind
-		msg = "WORM EATEN";
+		msg = "WORM EATEN" + spaces;
 		//cout << Bleep;
 		puts(Bleep);
 
@@ -715,7 +694,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime LIFE_SPAN
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
-		msg = "PELLET ALERT!";
+		msg = "PELLET ALERT!" + spaces;
 		//cout << Bleep;									// produce a warning sound
 		puts(Bleep);
 
@@ -727,7 +706,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		garden[snail[0]][snail[1]] = SLIME;				// lay a final trail of slime
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
-		msg = "OH NO! A FROG!";
+		msg = "OH NO! A FROG!" + spaces;
 		//cout << Bleeeep;								// produce a death knell
 		puts(Bleep);
 		snailStillAlive = false;						// game over
@@ -738,7 +717,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 	case WALL:			// Oops, bumped into garden wall
 		//cout << Bleep;				// produce a warning sound
 		puts(Bleep);
-		msg = "THAT'S A WALL!";
+		msg = "THAT'S A WALL!" + spaces;
 		lifeLeft += ENERGY_USED;	// didn't move, so return some health!
 		moveResult = WALL;			//NEW record result of move
 		break;
@@ -755,13 +734,13 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 	case SLIME:				// Been here before, snail doesn't cross his own slime!
 		//cout << Bleep;		// produce a warning sound
 		puts(Bleep);
-		msg = "THAT'S SLIME!";
+		msg = "THAT'S SLIME!" + spaces;
 		lifeLeft += ENERGY_USED; // didn't move, so return some health!
 		moveResult = SLIME;								//NEW record result of move
 		break;
 
 	default:
-		msg = "NOT MOVED!";
+		msg = "NOT MOVED!" + spaces;
 		lifeLeft += ENERGY_USED; // didn't move, so return some health!
 		moveResult = STUCK;								//NEW record result of move
 
@@ -788,7 +767,7 @@ int getKeyPress()				//NEW2 now altered to read from file
 								// read in the selected option
 	//command = _getch();  		// to read arrow keys
 	//while (command == 224)	// to clear extra info from buffer
-	//	command = _getch();
+		//command = _getch();
 
 	//ST_Moves << command << ','; // NEW save commands as they're entered, as CSV file.
 
@@ -818,8 +797,8 @@ void showTitle(int column, int row)
 
 	puts("...THE SNAIL TRAIL...\n");
 
-	SelectBackColour(clWhite);
-	SelectTextColour(clRed);
+	//SelectBackColour(clWhite);
+	//SelectTextColour(clRed);
 
 } //end of showTitle
 
@@ -840,7 +819,6 @@ void showDateAndTime(int column, int row)
 	timeinfo = localtime(&rawtime);
 
 	strftime(bufferDate, sizeof(bufferDate), "%d-%m-%Y", timeinfo);
-	strftime(bufferTime, sizeof(bufferTime), "%I:%M:%S", timeinfo);
 
 	//string dateCharStr = string("DATE: ") + GetDate() + "\n";
 	//const char * dateChar = dateCharStr.c_str();
@@ -848,14 +826,47 @@ void showDateAndTime(int column, int row)
 	const char * dateChar = bufferDate;
 	puts(dateChar);
 
+	strftime(bufferTime, sizeof(bufferTime), "%I:%M:%S", timeinfo);
+
 	Gotoxy(column, row + 1);
 
 	//string timeCharStr = string("TIME: ") + GetTime() + "\n";
 	//const char * timeChar = timeCharStr.c_str();
-	const char * timeChar = timeChar;
+	const char * timeChar = bufferTime;
 	puts(timeChar);
 
 } //end of showDateAndTime
+
+void showTimingHeadings(int column, int row)
+{
+	SelectBackColour(clBlack);
+	SelectTextColour(clYellow);
+	Gotoxy(column, row);
+	cout << "Game Timings:";
+} //end of showTimingHeadings
+
+  //**************************************************************************
+  //													display garden on screen
+void paintGarden(const char garden[][SIZEX])
+{ //display garden content on screen
+
+	SelectBackColour(clGreen);
+	SelectTextColour(clDarkBlue);
+	Gotoxy(0, 2);
+
+	stringstream gardenString;
+
+	for (int y(0); y < (SIZEY); ++y)
+	{
+		for (int x(0); x < (SIZEX); ++x)
+		{
+			gardenString << (garden[y][x]);
+			//putchar(garden[y][x]);			// display current garden contents
+		}
+		gardenString << '\n';
+	}
+	puts(gardenString.str().c_str());
+} //end of paintGarden
 
 void showOptions(int column, int row)
 { //show game options
@@ -894,21 +905,14 @@ void showOptions(int column, int row)
 	puts(quitChar);
 } //end of showOptions
 
-void showMessage(string msg, int column, int row)
-{ //display auxiliary messages if any
 
-	SelectBackColour(clBlack);
-	SelectTextColour(clYellow);
-	Gotoxy(column, row);
-	cout << msg;			//display current message
-} //end of showMessage
 
 
 void showSnailhealth(float health, int column, int row)
 { //display snail life left
 
-	SelectBackColour(clBlack);
-	SelectTextColour(clYellow);
+	//SelectBackColour(clBlack);
+	//SelectTextColour(clYellow);
 	Gotoxy(column, row);
 	cout << fixed << setprecision(2);
 
@@ -928,14 +932,17 @@ void showSnailhealth(float health, int column, int row)
 
 } //end of showMessage
 
-
-void showTimingHeadings(int column, int row)
-{
+void showMessage(string msg, int column, int row)
+{ //display auxiliary messages if any
 	SelectBackColour(clBlack);
-	SelectTextColour(clYellow);
+	//SelectTextColour(clYellow);
 	Gotoxy(column, row);
-	cout << "Game Timings:";
-} //end of showTimingHeadings
+	if (previousMessage != msg) {
+		cout << msg;			//display current message
+		previousMessage = msg;
+	}
+} //end of showMessage
+
 
 int anotherGo(int column, int row)
 { //show end message and hold output screen
@@ -961,11 +968,22 @@ void showTimes(double InitTimeSecs, double FrameTimeSecs, double PaintTimeSecs, 
 	SelectBackColour(clBlack);
 	SelectTextColour(clWhite);
 	Gotoxy(column, row);
-	cout << setprecision(5) << "Initialise game= " << InitTimeSecs * micro << " us";
+	stringstream init;
+	stringstream paint;
+	stringstream frames;
+	init << setprecision(5) << "Initialise game= " << InitTimeSecs << "\n";
+	puts(init.str().c_str());
+	//cout << setprecision(5) << "Initialise game= " << InitTimeSecs * micro << " us";
 	Gotoxy(column, row + 1);
-	cout << setprecision(5) << "Paint Game=      " << PaintTimeSecs * milli << " ms";
+
+	paint << setprecision(5) << "Paint Game=      " << PaintTimeSecs * milli << " ms";
+	puts(paint.str().c_str());
+	//cout << setprecision(5) << "Paint Game=      " << PaintTimeSecs * milli << " ms";
 	Gotoxy(column, row + 3);
-	cout << setprecision(3) << "Frames/sec=      " << (double) 1.0 / FrameTimeSecs << " at " << setprecision(5) << FrameTimeSecs * milli << " ms/frame";
+
+	frames << setprecision(3) << "Frames/sec=      " << (double) 1.0 / FrameTimeSecs << " at " << setprecision(5) << FrameTimeSecs * milli << " ms/frame";
+	puts(frames.str().c_str());
+	//cout << setprecision(3) << "Frames/sec=      " << (double) 1.0 / FrameTimeSecs << " at " << setprecision(5) << FrameTimeSecs * milli << " ms/frame";
 
 } // end of showTimes
 
