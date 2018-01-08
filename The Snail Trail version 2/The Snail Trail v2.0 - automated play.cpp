@@ -94,7 +94,6 @@ using namespace std;
 #include "RandomUtils.h"     //for Seed, Random,
 #include "ConsoleUtils.h"    //for Clrscr, Gotoxy, etc.
 #include "TimeUtils.h"       //for GetTime, GetDate, etc.
-#include <vector>
 
 // global constants
 
@@ -157,12 +156,6 @@ CStopWatch	InitTime,
 FrameTime,
 PaintTime;					// create stopwatchs for timing
 
-struct coords
-{
-	int x;
-	int y;
-};
-
 //*******************************************************************
 // NEW Declarations dealing with instrumentation and saving game data
 
@@ -191,16 +184,16 @@ int __cdecl main()
 {
 	//function prototypes
 
-	void initialiseGame(int&, bool&, coords slimeTrail[SLIMELIFE], char[][SIZEX], int[], int[][2], char[][SIZEX]);
+	void initialiseGame(int&, bool&, char[][SIZEX], char[][SIZEX], int[], int[][2], char[][SIZEX]);
 	void paintGame(string message, char[][SIZEX]);
 	void clearMessage(string& message);
 
 	int getKeyPress();
 	void analyseKey(string& message, int, int move[2]);
-	void moveSnail(char[][SIZEX], int[], int[], string&, char[][SIZEX], coords slimeTrail[SLIMELIFE]);
+	void moveSnail(char[][SIZEX], int[], int[], string&, char[][SIZEX], char[][SIZEX]);
 	void moveFrogs(int[], int[][2], string&, char[][SIZEX], char[][SIZEX]);
 	void placeSnail(char[][SIZEX], int[]);
-	void dissolveSlime(char[][SIZEX], coords slimeTrail[SLIMELIFE]);
+	void dissolveSlime(char[][SIZEX], char[][SIZEX]);
 	void showFood(char[][SIZEX], char[][SIZEX]);
 
 	int anotherGo(int, int);
@@ -214,7 +207,7 @@ int __cdecl main()
 	//local variables
 	//arrays that store ...
 	char garden[SIZEY][SIZEX];			// the game 'world'
-	coords slimeTrail[SLIMELIFE];		// lifetime of slime counters overlay
+	char slimeTrail[SIZEY][SIZEX];		// lifetime of slime counters overlay
 	char foodSources[SIZEY][SIZEX];		// remember where the lettuces are planted and worms are
 
 	string message;							// various messages are produced in game.
@@ -313,14 +306,14 @@ int __cdecl main()
   //**************************************************************************
   //													set game configuration
 
-void initialiseGame(int& Eaten, bool& fullUp, coords slimeTrail[SLIMELIFE], char foodSources[][SIZEX],
+void initialiseGame(int& Eaten, bool& fullUp, char slimeTrail[][SIZEX], char foodSources[][SIZEX],
 	int snail[], int frogs[][2], char garden[][SIZEX])
 { //initialise garden & place snail somewhere
 
 	void setGarden(char[][SIZEX]);
 	void setSnailInitialCoordinates(int[]);
 	void placeSnail(char[][SIZEX], int[]);
-	void initialiseSlimeTrail(coords slimeTrail[SLIMELIFE]);
+	void initialiseSlimeTrail(char[][SIZEX]);
 	void initialiseFoodSources(char[][SIZEX]);
 	void showFood(char[][SIZEX], char[][SIZEX]);
 	void scatterStuff(char[][SIZEX], char[][SIZEX], int[]);
@@ -380,14 +373,19 @@ void placeSnail(char garden[][SIZEX], int snail[])
   //**************************************************************************
   //												slowly dissolve slime trail
 
-void dissolveSlime(char garden[][SIZEX], coords slimeTrail[SLIMELIFE])
+void dissolveSlime(char garden[][SIZEX], char slimeTrail[][SIZEX])
 {// go through entire slime trail and decrement each item of slime in order
-	if (sizeof(slimeTrail) > 19) {
-		garden[slimeTrail[0].x][slimeTrail[0].y] = GRASS;
-		for (int i = 0; i < 20; i++)
-			slimeTrail[i] = slimeTrail[i + 1];
-	}
-	
+
+	for (int x = 1; x < SIZEX - 1; x++)
+		for (int y = 1; y < SIZEY - 1; y++)
+		{
+			if (slimeTrail[y][x] <= SLIMELIFE && slimeTrail[y][x] > 0)	// if this bit of slime exists
+			{
+				slimeTrail[y][x] --;									// then dissolve slime a little.
+				if (slimeTrail[y][x] == 0)								// if totally dissolved then
+					garden[y][x] = GRASS;								// then remove slime from garden
+			}
+		}
 }
 
 //**************************************************************************
@@ -437,9 +435,12 @@ void paintGame(string msg, char garden[][SIZEX])
 
   //**************************************************************************
   //															no slime yet!
-void initialiseSlimeTrail(coords slimeTrail[SLIMELIFE])
+void initialiseSlimeTrail(char slimeTrail[][SIZEX])
 { // set the whole array to 0
-	slimeTrail[SLIMELIFE] = { 0 };
+	//memset(slimeTrail, 0, sizeof(slimeTrail));
+	for (int x = 1; x < SIZEX - 1; x++)			// can't slime the walls
+		for (int y = 1; y < SIZEY - 1; y++)
+			slimeTrail[y][x] = 0;
 }
 
 
@@ -630,7 +631,7 @@ bool eatenByEagle(char garden[][SIZEX], int frog[])
 //**************************************************************************
 //											implement player's move command
 
-void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& msg, char garden[][SIZEX], coords slimeTrail[SLIMELIFE])
+void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& msg, char garden[][SIZEX], char slimeTrail[][SIZEX])
 {
 	const string spaces = "                                              ";
 	// move snail on the garden when possible.
@@ -656,8 +657,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 
 	case LETTUCE:		// increment lettuce count and win if snail is full
 		garden[snail[0]][snail[1]] = SLIME;				//lay a trail of slime
-		slimeTrail[sizeof(slimeTrail)+1] = coords{ snail[0], snail[1] };//set slime LIFE_SPAN
-		//slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		//set slime LIFE_SPAN
+		slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		//set slime LIFE_SPAN
 		snail[0] += keyMove[0];							//go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		foodSources[snail[0]][snail[1]] = GRASS;		// eat the lettuce, repace with grass
@@ -676,8 +676,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 
 	case WORM:			// if snail eats a worm, life extends... 
 		garden[snail[0]][snail[1]] = SLIME;				// lay a trail of slime
-		//slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime LIFE_SPAN
-		slimeTrail[sizeof(slimeTrail) + 1] = coords{ snail[0], snail[1] };//set slime LIFE_SPAN
+		slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime LIFE_SPAN
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		foodSources[snail[0]][snail[1]] = GRASS;		// eat the worm, only grass left behind
@@ -692,8 +691,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 
 	case PELLET:		// warn that a pellet has been slithered over and poisoned the snail a bit
 		garden[snail[0]][snail[1]] = SLIME;				// lay a trail of slime
-		//slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime LIFE_SPAN
-		slimeTrail[sizeof(slimeTrail) + 1] = coords{ snail[0], snail[1] };//set slime LIFE_SPAN
+		slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime LIFE_SPAN
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		msg = "PELLET ALERT!" + spaces;
@@ -727,8 +725,7 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 	case GRASS:
 	case DEAD_FROG_BONES:	// it's safe to move over dead/missing frogs too
 		garden[snail[0]][snail[1]] = SLIME;				// lay a trail of slime
-		//slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime life span
-		slimeTrail[sizeof(slimeTrail) + 1] = coords{ snail[0], snail[1] };//set slime LIFE_SPAN
+		slimeTrail[snail[0]][snail[1]] = SLIMELIFE;		// set slime life span
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		moveResult = GRASS;								//NEW record result of move
@@ -770,7 +767,7 @@ int getKeyPress()				//NEW2 now altered to read from file
 								// read in the selected option
 	//command = _getch();  		// to read arrow keys
 	//while (command == 224)	// to clear extra info from buffer
-	//	command = _getch();
+		//command = _getch();
 
 	//ST_Moves << command << ','; // NEW save commands as they're entered, as CSV file.
 
