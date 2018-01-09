@@ -191,6 +191,10 @@ int __cdecl main()
 {
 	//function prototypes
 
+	for (int i = 0; i < 20; i++) {
+		slimeTrailArray[i] = coords{ 0,0 };
+	}
+
 	void initialiseGame(int&, bool&, char[][SIZEX], int[], int[][2], char[][SIZEX]);
 	void paintGame(string message, char[][SIZEX]);
 	void clearMessage(string& message);
@@ -384,10 +388,9 @@ void dissolveSlime(char garden[][SIZEX])
 	if (slimeTrailArray[0].x != 0) {
 		garden[slimeTrailArray[0].x][slimeTrailArray[0].y] = GRASS;
 	}
-		for (int i = 0; i <= 19; i++) {
+		for (int i = 0; i < 19; i++) {
 			slimeTrailArray[i] = slimeTrailArray[i + 1];
 		}
-
 }
 
 //**************************************************************************
