@@ -142,7 +142,7 @@ const char QUIT('q');					//end the game
 //string Bleeeep("\a\a");				// very annoying Bleeps
 string Bleep("B");				// NEW2 Silent Version ! annoying Bleep
 string Bleeeep("BB");				// NEW2 Silent Version ! very annoying Bleeps
-
+string previousMessage;				// Stores previous message - caching messages
 const int LEFTM(SIZEX + 3);				//define left margin for messages (avoiding garden)
 
 										//define a few global control constants for our snail
@@ -150,7 +150,6 @@ int	  snailStillAlive(true);			// snail starts alive!
 float lifeLeft(LIFE_SPAN);				// Life starts at 100%, need to eat lettuces and worms to live
 int   lettucesEaten(0);					// win when this reaches LETTUCE_QUOTA
 bool  fullOfLettuce(false);				// when full and alive snail has won!
-string previousMessage("");
 
 CStopWatch	InitTime,
 FrameTime,
@@ -942,9 +941,14 @@ void showMessage(string msg, int column, int row)
 { //display auxiliary messages if any
 	SelectBackColour(clBlack);
 	//SelectTextColour(clYellow);
-	Gotoxy(column, row);
 	if (previousMessage != msg) {
-		cout << msg;			//display current message
+
+		if (msg.length() < previousMessage.length()) {
+			Gotoxy(column, row);
+			puts("                    ");
+		}
+		Gotoxy(column, row);
+		puts(msg.c_str());			//display current message
 		previousMessage = msg;
 	}
 } //end of showMessage
