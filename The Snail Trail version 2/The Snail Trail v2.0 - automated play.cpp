@@ -140,7 +140,7 @@ const int LEFT(75);						// left key
 const char QUIT('q');					//end the game
 //const char Bleep('\a');				// annoying Bleep
 //string Bleeeep("\a\a");				// very annoying Bleeps
-const char * Bleep = ("B");				// NEW2 Silent Version ! annoying Bleep
+string Bleep("B");				// NEW2 Silent Version ! annoying Bleep
 string Bleeeep("BB");				// NEW2 Silent Version ! very annoying Bleeps
 
 const int LEFTM(SIZEX + 3);				//define left margin for messages (avoiding garden)
@@ -597,19 +597,18 @@ void moveFrogs(int snail[], int frogs[][2], string& msg, char garden[][SIZEX], c
 			{
 				if (frogs[f][0] == snail[0] && frogs[f][1] == snail[1])	// landed on snail? - grub up!
 				{
-					msg = "FROG GOT YOU!";
+					msg = "FROG GOT YOU!" + Bleeeep;
 					//cout << Bleeeep;									// produce a death knell
-					const char * BleeeepChar = Bleeeep.c_str();
-					puts(BleeeepChar);
+					//puts(Bleeeep);
 					snailStillAlive = false;							// snail is dead!
 					gameEvent = DEADSNAIL;								//NEW record result
 				}
 				else garden[frogs[f][0]][frogs[f][1]] = FROG;			// display frog on garden (thus destroying any pellet that might be there).
 			}
 			else {
-				msg = "EAGLE GOT A FROG";
+				msg = "EAGLE GOT A FROG" + Bleep;
 				//cout << Bleep;											//produce a warning sound
-				puts(Bleep);
+				//puts(Bleep);
 			}
 		}
 	}// end of FOR loop
@@ -636,7 +635,6 @@ bool eatenByEagle(char garden[][SIZEX], int frog[])
 
 void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& msg, char garden[][SIZEX])
 {
-	const string spaces = "                                              ";
 	// move snail on the garden when possible.
 	// check intended new position & move if possible...
 	// ...depending on what's on the intended next position in garden.
@@ -644,10 +642,9 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 	lifeLeft -= ENERGY_USED;			// just moving costs energy, so deplete it. Assumes the move is made!
 	if (lifeLeft < 0.0)					// check if snail has run out of energy
 	{
-		msg = "EXHAUSTED! TIME TO DIE...";
+		msg = "EXHAUSTED! TIME TO DIE..." + Bleeeep;
 		//cout << Bleeeep;
-		const char * BleeeepChar = Bleeeep.c_str();
-		puts(BleeeepChar);
+		//puts(Bleeeep);
 		snailStillAlive = false;		// if exhausted, game over 
 		gameEvent = DEADSNAIL;			//NEW record result of move
 		return;
@@ -672,8 +669,8 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		if (lifeLeft > LIFE_SPAN) lifeLeft = LIFE_SPAN;	// can't acquire more than 100% energy
 
 		fullOfLettuce = (lettucesEaten == LETTUCE_QUOTA); // if full, stop the game as snail wins!
-		fullOfLettuce ? msg = "LAST LETTUCE EATEN" + spaces : msg = "LETTUCE EATEN" + spaces;
-		fullOfLettuce ? cout << Bleeeep : cout << Bleep;
+		fullOfLettuce ? msg = "LAST LETTUCE EATEN" + Bleeeep : msg = "LETTUCE EATEN" + Bleep;
+		//fullOfLettuce ? puts(Bleeeep) : puts(Bleep);
 		// WIN! WIN! WIN!
 		if (fullOfLettuce) gameEvent = WIN;				//NEW record result
 		moveResult = LETTUCE;							//NEW record result of move
@@ -687,9 +684,9 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
 		foodSources[snail[0]][snail[1]] = GRASS;		// eat the worm, only grass left behind
-		msg = "WORM EATEN" + spaces;
+		msg = "WORM EATEN" + Bleep;
 		//cout << Bleep;
-		puts(Bleep);
+		//puts(Bleep);
 
 		if (lifeLeft > (LIFE_SPAN - WORM_ENERGY)) lifeLeft = LIFE_SPAN;	// can't have more than 100% life span!
 		else lifeLeft += WORM_ENERGY;
@@ -703,9 +700,9 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		slimeTrailArray[19][1] = snail[1];
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
-		msg = "PELLET ALERT!" + spaces;
+		msg = "PELLET ALERT!" + Bleep;
 		//cout << Bleep;									// produce a warning sound
-		puts(Bleep);
+		//puts(Bleep);
 
 		lifeLeft *= (LIFE_SPAN - PELLET_POISON);		// lose a bit of health
 		moveResult = PELLET;							//NEW record result of move
@@ -715,9 +712,9 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 		garden[snail[0]][snail[1]] = SLIME;				// lay a final trail of slime
 		snail[0] += keyMove[0];							// go in direction indicated by keyMove
 		snail[1] += keyMove[1];
-		msg = "OH NO! A FROG!" + spaces;
+		msg = "OH NO! A FROG!" + Bleep;
 		//cout << Bleeeep;								// produce a death knell
-		puts(Bleep);
+		//puts(Bleep);
 		snailStillAlive = false;						// game over
 		moveResult = FROG;								//NEW record result of move
 		gameEvent = DEADSNAIL;							//NEW record result of move
@@ -725,8 +722,8 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 
 	case WALL:			// Oops, bumped into garden wall
 		//cout << Bleep;				// produce a warning sound
-		puts(Bleep);
-		msg = "THAT'S A WALL!" + spaces;
+		//puts(Bleep);
+		msg = "THAT'S A WALL!" + Bleep;
 		lifeLeft += ENERGY_USED;	// didn't move, so return some health!
 		moveResult = WALL;			//NEW record result of move
 		break;
@@ -744,14 +741,14 @@ void moveSnail(char foodSources[][SIZEX], int snail[], int keyMove[], string& ms
 
 	case SLIME:				// Been here before, snail doesn't cross his own slime!
 		//cout << Bleep;		// produce a warning sound
-		puts(Bleep);
-		msg = "THAT'S SLIME!" + spaces;
+		//puts(Bleep);
+		msg = "THAT'S SLIME!" + Bleep;
 		lifeLeft += ENERGY_USED; // didn't move, so return some health!
 		moveResult = SLIME;								//NEW record result of move
 		break;
 
 	default:
-		msg = "NOT MOVED!" + spaces;
+		msg = "NOT MOVED!";
 		lifeLeft += ENERGY_USED; // didn't move, so return some health!
 		moveResult = STUCK;								//NEW record result of move
 
@@ -853,7 +850,7 @@ void showTimingHeadings(int column, int row)
 	SelectBackColour(clBlack);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row);
-	cout << "Game Timings:";
+	puts ("Game Timings:");
 } //end of showTimingHeadings
 
   //**************************************************************************
@@ -925,6 +922,8 @@ void showSnailhealth(float health, int column, int row)
 	//SelectBackColour(clBlack);
 	//SelectTextColour(clYellow);
 	Gotoxy(column, row);
+	stringstream stream;
+	stream << fixed << setprecision(2);
 	cout << fixed << setprecision(2);
 
 	if (health < (LIFE_SPAN / 4.0))   // if health drops below 25% highlight it in RED
@@ -932,13 +931,9 @@ void showSnailhealth(float health, int column, int row)
 	else SelectTextColour(clYellow);
 
 	if (health < 0.0) {
-		string Health = string("Health: none!");
-		const char * HealthChar = Health.c_str();
-		puts(HealthChar);
+		puts("Health: none!");
 	} else {
-		string Health = "Health: " + to_string(health * 100.0) + "%";
-		const char * HealthChar = Health.c_str();
-		puts(HealthChar);
+		printf("Health: %.2f %c ", (health * 100.0), '%');
 	}
 
 } //end of showMessage
@@ -961,7 +956,7 @@ int anotherGo(int column, int row)
 	SelectBackColour(clRed);
 	SelectTextColour(clYellow);
 	Gotoxy(column, row);
-	cout << "PRESS 'Q' AGAIN TO QUIT, OR ANY KEY TO CONTINUE";
+	puts("PRESS 'Q' AGAIN TO QUIT, OR ANY KEY TO CONTINUE");
 	SelectBackColour(clBlack);
 	SelectTextColour(clWhite);
 
