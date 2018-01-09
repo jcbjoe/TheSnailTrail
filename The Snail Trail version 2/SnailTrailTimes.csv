@@ -1578,3 +1578,96 @@ Average Paint time=	0.861 ms
 Average Init time=	286529.761 us
 
 *************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 09/01/2018	TIME: 21:13:00
+SUMMARY for 29 games played, with 934 moves entered.
+
+Average frames/sec=	68027.216
+Average Paint time=	1.204 ms
+Average Init time=	13.478 us
+
+*************************************************************************************************************************
+
+DATE:	09/01/2018	TIME:	21:33:57
+Initialising game took 33.06 us
+
+Paint Game (ms)		Move made & Status			Health		Frame rate/s	Time/Frame (ms)	Screen messages
+-----------------------------------------------------------------------------------------------------------
+	1.28		DOWN  to GRASS   and FROG GONE 96.67%			0.26		3823.70		EAGLE GOT A FROG
+	0.96		DOWN  to GRASS   and ALIVE     93.33%			89946.50		0.01		
+	0.89		DOWN  to GRASS   and ALIVE     90.00%			83365.05		0.01		
+	0.85		DOWN  to GRASS   and ALIVE     86.67%			83365.05		0.01		
+	0.80		DOWN  to GRASS   and ALIVE     83.33%			81380.17		0.01		
+	0.89		DOWN  to GRASS   and ALIVE     80.00%			81380.17		0.01		
+	0.81		DOWN  to GRASS   and ALIVE     76.67%			83365.05		0.01		
+	0.85		DOWN  to GRASS   and ALIVE     73.33%			72722.70		0.01		
+	1.10		DOWN  to GRASS   and ALIVE     70.00%			83365.05		0.01		
+	0.82		LEFT  to GRASS   and ALIVE     66.67%			85449.17		0.01		
+	1.63		DOWN  to DEATH   and LOST GAME 63.33%			19871.90		0.05		OH NO! A FROG!                                              
+
+DATE:	09/01/2018	TIME:	21:34:04
+Initialising game took 32.48 us
+
+Paint Game (ms)		Move made & Status			Health		Frame rate/s	Time/Frame (ms)	Screen messages
+-----------------------------------------------------------------------------------------------------------
+	1.32		DOWN  to GRASS   and ALIVE     96.67%			81380.17		0.01		READY TO SLITHER!? PRESS A KEY...
+	0.78		LEFT  to GRASS   and ALIVE     93.33%			85449.17		0.01		
+	0.93		DOWN  to GRASS   and ALIVE     90.00%			77681.07		0.01		
+	0.82		LEFT  to GRASS   and ALIVE     86.67%			83365.05		0.01		
+	1.10		DOWN  to GRASS   and ALIVE     83.33%			75954.82		0.01		
+	0.89		LEFT  to GRASS   and ALIVE     80.00%			81380.17		0.01		
+	0.83		LEFT  to GRASS   and ALIVE     76.67%			85449.17		0.01		
+	0.82		LEFT  to GRASS   and ALIVE     73.33%			68359.34		0.01		
+	1.37		DOWN  to LETTUCE and ALIVE     86.67%			0.28		3570.71		LETTUCE EATEN                                              
+	0.84		DOWN  to GRASS   and ALIVE     83.33%			81380.17		0.01		
+	0.77		RIGHT to GRASS   and ALIVE     80.00%			85449.17		0.01		
+	1.33		RIGHT to GRASS   and ALIVE     76.67%			79487.60		0.01		
+	0.97		DOWN  to GRASS   and ALIVE     73.33%			77681.07		0.01		
+	0.81		DOWN  to GRASS   and ALIVE     70.00%			81380.17		0.01		
+	0.82		DOWN  to GRASS   and ALIVE     66.67%			85449.17		0.01		
+	0.99		DOWN  to GRASS   and ALIVE     63.33%			81380.17		0.01		
+	0.87		DOWN  to GRASS   and ALIVE     60.00%			81380.17		0.01		
+	1.19		DOWN  to GRASS   and ALIVE     56.67%			68359.34		0.01		
+	1.39		LEFT  to WORM    and ALIVE     100.00%			26091.35		0.04		WORM EATEN                                              
+	0.81		LEFT  to GRASS   and ALIVE     96.67%			81380.17		0.01		
+	0.86		UP    to GRASS   and ALIVE     93.33%			81380.17		0.01		
+	1.02		LEFT  to GRASS   and ALIVE     90.00%			83365.05		0.01		
+	1.03		LEFT  to GRASS   and ALIVE     86.67%			68359.34		0.01		
+	1.24		LEFT  to GRASS   and ALIVE     83.33%			81380.17		0.01		
+	0.87		LEFT  to GRASS   and ALIVE     80.00%			85449.17		0.01		
+	0.84		LEFT  to GRASS   and ALIVE     76.67%			87640.18		0.01		
+	0.82		LEFT  to GRASS   and ALIVE     73.33%			85449.17		0.01		
+	0.84		LEFT  to GRASS   and ALIVE     70.00%			83365.05		0.01		
+	0.86		LEFT  to GRASS   and ALIVE     66.67%			83365.05		0.01		
+	1.00		LEFT  to GRASS   and ALIVE     63.33%			83365.05		0.01		
+	0.86		UP    to GRASS   and ALIVE     60.00%			87640.18		0.01		
+	0.90		UP    to GRASS   and LOST GAME 56.67%			30247.50		0.03		FROG GOT YOU!
+
+DATE:	09/01/2018	TIME:	21:35:34
+Initialising game took 13.46 us
+
+Paint Game (ms)		Move made & Status			Health		Frame rate/s	Time/Frame (ms)	Screen messages
+-----------------------------------------------------------------------------------------------------------
+	0.82		RIGHT to GRASS   and ALIVE     96.67%			0.07		13381.03		READY TO SLITHER!? PRESS A KEY...
+	1.14		DOWN  to GRASS   and ALIVE     93.33%			85449.17		0.01		
+	1.11		DOWN  to GRASS   and ALIVE     90.00%			83365.05		0.01		
+	0.88		DOWN  to GRASS   and ALIVE     86.67%			83365.05		0.01		
+	0.81		DOWN  to GRASS  
+
+Student: Joe Garlick	DATE: 09/01/2018	TIME: 21:37:36
+SUMMARY for 26 games played, with 940 moves entered.
+
+Average frames/sec=	96564.348
+Average Paint time=	1.076 ms
+Average Init time=	14.606 us
+
+*************************************************************************************************************************
+
+Student: Joe Garlick	DATE: 09/01/2018	TIME: 21:37:51
+SUMMARY for 26 games played, with 940 moves entered.
+
+Average frames/sec=	141836.879
+Average Paint time=	1.112 ms
+Average Init time=	13.413 us
+
+*************************************************************************************************************************
