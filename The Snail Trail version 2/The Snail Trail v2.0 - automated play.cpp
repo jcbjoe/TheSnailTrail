@@ -181,7 +181,7 @@ int slimeTrailArray[SLIMELIFE][2];		// lifetime of slime counters overlay
 
 // Start of the 'SNAIL TRAIL' listing
 //---------------------------------
-int __cdecl main()
+int main()
 {
 	//function prototypes
 
