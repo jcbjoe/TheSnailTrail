@@ -6,18 +6,20 @@
 void GetSystemTime( int& hrs, int& mins, int& secs)
 { //get time from system
 	time_t ltime;
-	struct tm *now;
+	struct tm now;
     // Set time zone from TZ environment variable. If TZ is not set, the operating
     // system is queried to obtain the default value for the variable. 
     _tzset();
     // Get UNIX-style time. 
     time( &ltime );
     // Convert to time structure. 
-	now =  localtime( &ltime );
+	
+	localtime_s(&now, &ltime);
+
     // Set Time objects members. 
-	hrs = now->tm_hour ;
-	mins = now->tm_min ;
-	secs = now->tm_sec ;
+	hrs = now.tm_hour;
+	mins = now.tm_min;
+	secs = now.tm_sec;
 }
 
 string TimeToString( int hours, int minutes, int seconds) 
